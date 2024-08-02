@@ -2,12 +2,12 @@ pipeline {
     agent any
 
     stages {
-        stage('w/o docker') {
-            steps {
-                sh 'echo "Bonjour lesgens"'
-            }
-        }
-        
+        // stage('w/o docker') {
+        //     steps {
+        //         sh 'echo "Bonjour lesgens"'
+        //     }
+        // }
+
         stage('w docker') {
             agent {
                 docker {
@@ -16,8 +16,14 @@ pipeline {
                 }
             }
             steps {
-                sh 'echo "Bonjour Avec Dcoker"'
-                sh 'node -v'
+                sh
+                '''
+                    ls -la
+                    npm --version
+                    npm ci
+                    npm run build
+                    ls -la
+                '''
             }
         }
     }
